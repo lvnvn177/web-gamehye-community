@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
+import Image from 'next/image';
 
 export default function LoginButton() {
   const [user, setUser] = useState<any>(null);
@@ -36,20 +37,33 @@ export default function LoginButton() {
   };
 
   return (
-    <div className="my-4">
+    <div>
       {user ? (
         <button 
           onClick={handleLogout} 
-          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
+          className="flex items-center justify-center p-2 rounded-full bg-gray-700 hover:bg-gray-600 transition"
+          title="로그아웃"
         >
-          로그아웃
+          <Image 
+            src="/User Icon.png" 
+            alt="로그아웃" 
+            width={28} 
+            height={28} 
+            className="opacity-70"
+          />
         </button>
       ) : (
         <button 
           onClick={handleLogin} 
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+          className="flex items-center justify-center p-2 rounded-full hover:bg-gray-700 transition"
+          title="Google 로그인"
         >
-          Google 로그인
+          <Image 
+            src="/public/icon_user.png" 
+            alt="Google 로그인" 
+            width={28} 
+            height={28} 
+          />
         </button>
       )}
     </div>
