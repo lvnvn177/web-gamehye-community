@@ -2,13 +2,18 @@
 import { useState } from 'react';
 import LoginButton from './LoginButton';
 import { X, Menu, PlusCircle } from 'lucide-react';
-import Link from 'next/link';
+import IdeaFormModal from './IdeaFormModal';
 
 export default function SideMenu() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
   };
 
   return (
@@ -40,14 +45,17 @@ export default function SideMenu() {
           </div>
           
           <nav className="space-y-4">
-            <Link href="/" className="block py-2 hover:text-blue-600 transition">홈</Link>
+            <a href="/" className="block py-2 hover:text-blue-600 transition">홈</a>
           </nav>
           
           <div className="mt-6 mb-6">
-            <Link href="#idea-form" className="flex items-center gap-2 py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+            <button 
+              onClick={toggleModal} 
+              className="flex items-center gap-2 py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 transition w-full"
+            >
               <PlusCircle className="h-5 w-5" />
               <span>아이디어 제출</span>
-            </Link>
+            </button>
           </div>
           
           <div className="mt-4">
@@ -55,6 +63,9 @@ export default function SideMenu() {
           </div>
         </div>
       </div>
+
+      {/* 아이디어 작성 모달 */}
+      {isModalOpen && <IdeaFormModal onClose={toggleModal} />}
     </>
   );
 } 

@@ -1,4 +1,3 @@
-import IdeaForm from '../components/IdeaForm';
 import QRCodeShare from '../components/QRCodeShare';
 import IdeaList from '../components/IdeaList';
 
@@ -11,11 +10,6 @@ export default function Home() {
       </p>
       
       <QRCodeShare />
-      
-      <div id="idea-form" className="my-8">
-        <h2 className="text-xl font-semibold mb-3">아이디어 제출</h2>
-        <IdeaForm />
-      </div>
       
       <div className="mt-8">
         <h2 className="text-xl font-semibold mb-4">아이디어 목록</h2>
