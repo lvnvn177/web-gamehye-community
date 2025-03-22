@@ -81,7 +81,7 @@ export default function ReplyDisplay({ ideaId }: { ideaId: number }) {
   }
 
   return (
-    <div className="mt-4 border-t border-gray-700 pt-4">
+    <div className="mt-4 pt-4">
       {replies.map((reply) => (
         <div key={reply.id} className="mb-3 bg-gray-700 bg-opacity-50 rounded-lg p-3">
           <div className="flex justify-between items-center mb-2">

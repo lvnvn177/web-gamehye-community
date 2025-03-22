@@ -126,7 +126,7 @@ export default function IdeaList() {
               </div>
             </div>
             
-            <p className={`text-gray-300 mb-3 ${customFont.className}`}>
+            <p className={`text-gray-300 mb-3 whitespace-pre-line ${customFont.className}`}>
               {isPrivateAndRestricted ? (
                 <span className="italic text-gray-500">비공개 아이디어입니다.</span>
               ) : (
@@ -136,7 +136,7 @@ export default function IdeaList() {
             
             {/* 관리자 답변 버튼 - 위치 변경 및 아이콘 사용 */}
             {isAdmin && (
-              <div className="flex justify-end mb-3">
+              <div className="flex justify-start mb-3">
                 <button 
                   onClick={() => toggleReplyForm(idea.id)}
                   className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-700 hover:bg-gray-600 text-gray-300 transition-colors"
@@ -151,7 +151,7 @@ export default function IdeaList() {
               </div>
             )}
             
-            {/* 구분선 추가 */}
+            {/* 구분선 - 재사용 */}
             <div className={`border-t border-gray-700 ${!isPrivateAndRestricted ? "mb-4" : ""}`}></div>
             
             {/* 답변 표시 컴포넌트 */}

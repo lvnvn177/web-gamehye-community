@@ -51,7 +51,7 @@ export default function ReplyForm({ ideaId, isPublic }: { ideaId: number, isPubl
   if (!isAdmin) return null;
 
   return (
-    <div className="mt-4 border-t pt-4">
+    <div className="mt-4 pt-2">
       <h3 className="text-lg font-semibold mb-2">
         운영자 답변 작성
         {!isPublic && <span className="ml-2 text-xs px-2 py-1 bg-gray-700 text-gray-400 rounded-full">비공개 아이디어</span>}
