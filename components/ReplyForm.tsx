@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 
-export default function ReplyForm({ ideaId }: { ideaId: number }) {
+export default function ReplyForm({ ideaId, isPublic }: { ideaId: number, isPublic: boolean }) {
   const [reply, setReply] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -51,7 +51,10 @@ export default function ReplyForm({ ideaId }: { ideaId: number }) {
 
   return (
     <div className="mt-4 border-t pt-4">
-      <h3 className="text-lg font-semibold mb-2">운영자 답변 작성</h3>
+      <h3 className="text-lg font-semibold mb-2">
+        운영자 답변 작성
+        {!isPublic && <span className="ml-2 text-xs px-2 py-1 bg-gray-700 text-gray-400 rounded-full">비공개 아이디어</span>}
+      </h3>
       <textarea
         value={reply}
         onChange={(e) => setReply(e.target.value)}

@@ -7,6 +7,7 @@ import { useIdeaForm } from '../context/IdeaFormContext';
 export default function InlineIdeaForm() {
   const { toggleIdeaForm } = useIdeaForm();
   const [description, setDescription] = useState('');
+  const [isPublic, setIsPublic] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -26,13 +27,13 @@ export default function InlineIdeaForm() {
       const { data: userData } = await supabase.auth.getUser();
       const userId = userData.user?.id;
       
-      // 데이터베이스 스키마에 맞게 필드 이름 수정
       const { error: insertError } = await supabase
         .from('ideas')
         .insert([
           { 
-            content: description, // description 대신 content 사용
-            user_id: userId || null
+            content: description,
+            user_id: userId || null,
+            is_public: isPublic
           },
         ]);
       
@@ -41,10 +42,9 @@ export default function InlineIdeaForm() {
       setDescription('');
       setSuccess(true);
       
-      // 3초 후 폼 숨기기
       setTimeout(() => {
         toggleIdeaForm();
-        window.location.reload(); // 페이지 새로고침으로 목록 업데이트
+        window.location.reload();
       }, 3000);
       
     } catch (err) {
@@ -85,6 +85,31 @@ export default function InlineIdeaForm() {
               placeholder="게임에 관련된 생각을 자유롭게 적어주세요."
               disabled={submitting}
             ></textarea>
+          </div>
+          
+          <div className="mb-4 flex items-center space-x-2">
+            <div className="flex items-center">
+              <input
+                type="radio"
+                id="public"
+                name="visibility"
+                checked={isPublic}
+                onChange={() => setIsPublic(true)}
+                className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-500 bg-gray-700"
+              />
+              <label htmlFor="public" className="text-gray-300">공개</label>
+            </div>
+            <div className="flex items-center ml-4">
+              <input
+                type="radio"
+                id="private"
+                name="visibility"
+                checked={!isPublic}
+                onChange={() => setIsPublic(false)}
+                className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-500 bg-gray-700"
+              />
+              <label htmlFor="private" className="text-gray-300">비공개</label>
+            </div>
           </div>
           
           <div className="flex justify-center mt-4">
