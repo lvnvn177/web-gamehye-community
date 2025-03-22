@@ -4,9 +4,10 @@ import IdeaList from '../../components/idea/IdeaList';
 import InlineIdeaForm from '../../components/sidemenu/InlineIdeaForm';
 import { useIdeaForm } from '../../context/IdeaFormContext';
 import { useEffect } from 'react';
+import { PlusCircle } from 'lucide-react';
 
 export default function IdeaPage() {
-  const { isFormVisible } = useIdeaForm();
+  const { isFormVisible, toggleIdeaForm } = useIdeaForm();
   
   // 폼이 표시될 때 body에 클래스 추가하여 스크롤 방지
   useEffect(() => {
@@ -62,7 +63,18 @@ export default function IdeaPage() {
       )}
       
       <div className="mt-8">
-        <h2 className="text-xl font-semibold mb-4 text-center text-gray-200">생각 목록</h2>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold text-gray-200">생각 목록</h2>
+          
+          {/* 아이디어 제출 버튼 추가 */}
+          <button 
+            onClick={toggleIdeaForm}
+            className="flex items-center space-x-1 text-gray-300 hover:text-white bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded"
+          >
+            <PlusCircle className="h-4 w-4" />
+            <span>생각 남기기</span>
+          </button>
+        </div>
         <hr className="border-gray-600 mb-6" />
         <IdeaList />
       </div>

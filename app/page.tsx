@@ -16,14 +16,14 @@ export default function HomePage() {
               피드백을 주고받으며 함께 성장할 수 있는 커뮤니티 플랫폼입니다.
             </p>
             
-            <div className="mb-8">
+            {/* <div className="mb-8">
               <Link 
                 href="/idea" 
                 className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition duration-200"
               >
                 아이디어 둘러보기
               </Link>
-            </div>
+            </div> */}
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">

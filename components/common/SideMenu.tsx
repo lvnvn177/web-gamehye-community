@@ -1,13 +1,19 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import LoginButton from '../sidemenu/LoginButton';
-import { X, Menu, Home } from 'lucide-react';
+import { X, Menu } from 'lucide-react';
 import Image from 'next/image';
 import { useIdeaForm } from '../../context/IdeaFormContext';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function SideMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const { toggleIdeaForm } = useIdeaForm();
+  const pathname = usePathname();
+  
+  const isHome = pathname === '/';
+  const isIdeaPage = pathname === '/idea';
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -48,33 +54,40 @@ export default function SideMenu() {
           <div className="p-4">
             {/* 모든 버튼을 세로로 정렬 */}
             <div className="flex flex-col items-center space-y-6">
-              {/* 홈 버튼을 아이콘으로 변경 */}
-              <a 
+              {/* 홈 버튼 - 선택 상태에 따라 아이콘 변경만 적용, 빛나는 효과 제거 */}
+              <Link 
                 href="/" 
-                className="flex items-center justify-center p-2 rounded-full hover:bg-gray-700 transition"
+                className="flex items-center justify-center p-2 rounded-full"
                 title="홈"
               >
-                <Home className="h-6 w-6 text-gray-300" />
-              </a>
+                <Image 
+                  src={isHome ? "/icon_select_home.svg" : "/icon_home.svg"} 
+                  alt="홈" 
+                  width={28} 
+                  height={28}
+                  priority
+                  style={{ width: '24px', height: '24px', objectFit: 'contain' }}
+                />
+              </Link>
               
-              {/* 아이디어 제출 버튼 */}
-              <button 
-                onClick={toggleIdeaForm} 
-                className="flex items-center justify-center p-2 rounded-full hover:bg-gray-700 transition"
-                title="아이디어 제출"
+              {/* 아이디어 제출 버튼 - 선택 상태에 따라 아이콘 변경만 적용, 빛나는 효과 제거 */}
+              <Link 
+                href="/idea" 
+                className="flex items-center justify-center p-2 rounded-full"
+                title="아이디어 페이지"
               >
                 <Image 
-                  src="/icon_idea.svg" 
-                  alt="아이디어 제출" 
+                  src={isIdeaPage ? "/icon_select_idea.svg" : "/icon_idea.svg"} 
+                  alt="아이디어 페이지" 
                   width={32} 
                   height={32}
                   priority
                   style={{ width: '24px', height: '24px', objectFit: 'contain' }}
                 />
-              </button>
+              </Link>
               
-              {/* 로그인 버튼 */}
-              <LoginButton />
+              {/* 로그인 버튼 - 현재 경로 전달 */}
+              <LoginButton currentPath={pathname} />
             </div>
           </div>
         </div>
