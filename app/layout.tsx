@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import SideMenu from "../components/SideMenu";
+import SideMenu from "../components/common/SideMenu";
 import { IdeaFormProvider } from "../context/IdeaFormContext";
 
 const geistSans = Geist({

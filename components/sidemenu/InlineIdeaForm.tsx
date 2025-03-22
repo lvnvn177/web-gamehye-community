@@ -1,8 +1,8 @@
 'use client';
 import { useState } from 'react';
-import { supabase } from '../lib/supabase';
+import { supabase } from '../../lib/supabase';
 import { X } from 'lucide-react';
-import { useIdeaForm } from '../context/IdeaFormContext';
+import { useIdeaForm } from '../../context/IdeaFormContext';
 
 export default function InlineIdeaForm() {
   const { toggleIdeaForm } = useIdeaForm();

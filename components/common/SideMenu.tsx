@@ -1,9 +1,9 @@
 'use client';
 import { useState } from 'react';
-import LoginButton from './LoginButton';
+import LoginButton from '../sidemenu/LoginButton';
 import { X, Menu, Home } from 'lucide-react';
 import Image from 'next/image';
-import { useIdeaForm } from '../context/IdeaFormContext';
+import { useIdeaForm } from '../../context/IdeaFormContext';
 
 export default function SideMenu() {
   const [isOpen, setIsOpen] = useState(false);

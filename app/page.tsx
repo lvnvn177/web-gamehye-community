@@ -1,71 +1,43 @@
 'use client';
-import QRCodeShare from '../components/QRCodeShare';
-import IdeaList from '../components/IdeaList';
-import InlineIdeaForm from '../components/InlineIdeaForm';
-import { useIdeaForm } from '../context/IdeaFormContext';
-import { useEffect } from 'react';
+import Link from 'next/link';
+import Footer from '../components/common/Footer';
 
-export default function Home() {
-  const { isFormVisible } = useIdeaForm();
-  
-  // 폼이 표시될 때 body에 클래스 추가하여 스크롤 방지
-  useEffect(() => {
-    if (isFormVisible) {
-      document.body.classList.add('overflow-hidden');
-    } else {
-      document.body.classList.remove('overflow-hidden');
-    }
-    
-    return () => {
-      document.body.classList.remove('overflow-hidden');
-    };
-  }, [isFormVisible]);
-  
+export default function HomePage() {
   return (
-    <div className="max-w-lg mx-auto p-4 py-8 relative" style={{ marginLeft: '20%', transform: 'translateX(70%)' }}>
-      {/* 인라인 스타일을 사용하여 매우 낮은 불투명도(5%) 적용 */}
-      {isFormVisible && (
-        <div className="fixed inset-0 z-40" style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }} />
-      )}
-      
-      <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold mb-4 text-gray-100">GameHye</h1>
-        <p className="mb-2 text-lg text-gray-300">
-          게임에 대한 철학과 아이디어를 자유롭게 나누는 공간입니다.
-        </p>
-      </div>
-      
-      <QRCodeShare />
-      
-      {/* 인라인 아이디어 폼 - 모달 형태로 변경 */}
-      {isFormVisible && (
-        <div className="fixed inset-0 flex items-center justify-center z-50" 
-             style={{ 
-               top: 0, 
-               left: 0, 
-               right: 0, 
-               bottom: 0, 
-               margin: 0,
-               transform: 'none',
-               position: 'fixed'
-             }}>
-          <div className="w-full max-w-lg" style={{ 
-            position: 'absolute', 
-            top: '70%',
-            left: '50%', 
-            transform: 'translate(-50%, -50%)',
-            maxWidth: '90vw'
-          }}>
-            <InlineIdeaForm />
+    <div className="flex min-h-screen flex-col">
+      <main className="flex-grow flex flex-col items-center justify-center p-6 md:p-24">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-100">GameHye</h1>
+          
+          <div className="mb-10">
+            <p className="text-xl md:text-2xl mb-4 text-gray-300">게임에 관한 모든 아이디어를 공유하고 발전시키는 공간</p>
+            <p className="text-lg text-gray-400 mb-8">
+              GameHye는 게임 개발자와 게임 애호가들이 모여 새로운 게임 아이디어를 공유하고,
+              피드백을 주고받으며 함께 성장할 수 있는 커뮤니티 플랫폼입니다.
+            </p>
+            
+            <div className="mb-8">
+              <Link 
+                href="/idea" 
+                className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition duration-200"
+              >
+                아이디어 둘러보기
+              </Link>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+            <div className="bg-gray-700 p-6 rounded-lg shadow-md">
+              <h2 className="text-xl font-bold mb-3 text-gray-100">아이디어 공유</h2>
+              <p className="text-gray-300">
+                새로운 게임 아이디어를 자유롭게 제안하고, 다른 사람들의 아이디어를 통해 영감을 얻으세요.
+              </p>
+            </div>
           </div>
         </div>
-      )}
+      </main>
       
-      <div className="mt-8">
-        <h2 className="text-xl font-semibold mb-4 text-center text-gray-200">생각 목록</h2>
-        <hr className="border-gray-600 mb-6" />
-        <IdeaList />
-      </div>
+      <Footer />
     </div>
   );
 }
