@@ -17,6 +17,34 @@ export default function IdeaList() {
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
+  // 시간 형식 변환 함수 수정
+  const formatTimeAgo = (dateString: string) => {
+    const now = new Date();
+    const createdAt = new Date(dateString);
+    
+    // 현재 UTC 시간과 로컬 시간의 차이를 보정 (시간대 차이 제거)
+    const timezoneOffset = now.getTimezoneOffset() * 60 * 1000;
+    
+    // 시간 차이 계산 (밀리초 단위)
+    const diffInMs = now.getTime() - createdAt.getTime();
+    
+    // 시간 차이를 시간 단위로 변환
+    const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
+    
+    // 24시간 이내인 경우
+    if (diffInHours < 24) {
+      // 1시간 미만인 경우 분 단위로 표시
+      if (diffInHours < 1) {
+        const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
+        return diffInMinutes <= 0 ? '방금 전' : `${diffInMinutes}분 전`;
+      }
+      return `${diffInHours}시간 전`;
+    }
+    
+    // 24시간 이상인 경우 날짜 형식으로 표시
+    return createdAt.toLocaleDateString('ko-KR');
+  };
+
   useEffect(() => {
     async function fetchUserAndIdeas() {
       try {
@@ -89,7 +117,7 @@ export default function IdeaList() {
             </p>
             <div className="text-sm text-gray-500 flex justify-between">
               <span>익명</span>
-              <span>{new Date(idea.created_at).toLocaleDateString('ko-KR')}</span>
+              <span>{formatTimeAgo(idea.created_at)}</span>
             </div>
           </div>
         );

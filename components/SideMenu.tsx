@@ -67,7 +67,9 @@ export default function SideMenu() {
                   src="/icon_idea.svg" 
                   alt="아이디어 제출" 
                   width={32} 
-                  height={32} 
+                  height={32}
+                  priority
+                  style={{ width: '24px', height: '24px', objectFit: 'contain' }}
                 />
               </button>
               

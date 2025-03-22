@@ -50,6 +50,7 @@ export default function LoginButton() {
             width={28} 
             height={28} 
             className="opacity-70"
+            style={{ width: '24px', height: '24px', objectFit: 'contain' }}
           />
         </button>
       ) : (
@@ -62,7 +63,8 @@ export default function LoginButton() {
             src="/icon_user.svg" 
             alt="Google 로그인" 
             width={28} 
-            height={28} 
+            height={28}
+            style={{ width: '24px', height: '24px', objectFit: 'contain' }}
           />
         </button>
       )}

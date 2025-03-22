@@ -51,7 +51,7 @@ export default function Home() {
              }}>
           <div className="w-full max-w-lg" style={{ 
             position: 'absolute', 
-            top: '140%',
+            top: '70%',
             left: '50%', 
             transform: 'translate(-50%, -50%)',
             maxWidth: '90vw'
