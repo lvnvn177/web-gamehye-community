@@ -30,7 +30,7 @@ export default function InlineIdeaForm() {
         .from('ideas')
         .insert([
           { 
-            title: '아이디어', // 기본 제목 설정
+            title: '새로운 생각', // 기본 제목 설정
             description, 
             user_id: userId || null,
             author_name: null // 작성자 이름 없음
@@ -59,7 +59,7 @@ export default function InlineIdeaForm() {
   return (
     <div className="border border-gray-700 rounded-lg p-4 bg-gray-800 shadow-md mb-6">
       <div className="flex justify-between items-center mb-3">
-        <h2 className="text-lg font-semibold text-gray-100">새 아이디어</h2>
+        <h2 className="text-lg font-semibold text-gray-100">새로운 생각</h2>
         <button onClick={toggleIdeaForm} className="text-gray-400 hover:text-gray-200">
           <X className="h-5 w-5" />
         </button>
@@ -83,22 +83,22 @@ export default function InlineIdeaForm() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="w-full p-2 border border-gray-600 rounded bg-gray-700 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none h-32"
-              placeholder="여기에 아이디어를 자유롭게 작성해주세요..."
+              placeholder="게임에 관련된 생각을 자유롭게 적어주세요."
               disabled={submitting}
             ></textarea>
           </div>
           
-          <div>
+          <div className="flex justify-center mt-4">
             <button
               type="submit"
-              className={`py-2 px-4 rounded ${
+              className={`py-2 px-6 rounded ${
                 submitting
-                  ? 'bg-gray-600 cursor-not-allowed'
-                  : 'bg-blue-600 hover:bg-blue-700'
-              } text-white transition`}
+                  ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
+                  : 'bg-gray-700 hover:bg-gray-600 text-gray-200'
+              } transition border border-gray-600`}
               disabled={submitting}
             >
-              {submitting ? '제출 중...' : '제출하기'}
+              {submitting ? '남기는 중...' : '남기기'}
             </button>
           </div>
         </form>

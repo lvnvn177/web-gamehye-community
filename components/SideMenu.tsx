@@ -26,7 +26,7 @@ export default function SideMenu() {
       {/* 오버레이 - 모바일에서 메뉴 외부 클릭 시 닫힘 */}
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-70 z-40 md:hidden"
+          className="fixed inset-0 bg-black bg-opacity-10 z-40 md:hidden"
           onClick={toggleMenu}
         />
       )}
