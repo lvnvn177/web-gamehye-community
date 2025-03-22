@@ -52,7 +52,7 @@ export default function IdeaPage() {
       
       {isFormVisible && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="bg-gray-800 p-6 rounded-lg shadow-lg relative max-w-lg w-full mx-4">
+          <div className="relative z-10 w-full max-w-md border border-gray-700 rounded-lg bg-gray-800">
             <InlineIdeaForm />
           </div>
         </div>

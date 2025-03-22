@@ -57,7 +57,7 @@ export default function InlineIdeaForm() {
   };
 
   return (
-    <div className="border border-gray-700 rounded-lg p-4 bg-gray-800 shadow-md mb-6">
+    <div className="px-4 py-4">
       <div className="flex justify-between items-center mb-3">
         <h2 className="text-lg font-semibold text-gray-100">새로운 생각</h2>
         <button onClick={toggleIdeaForm} className="text-gray-400 hover:text-gray-200">
@@ -88,32 +88,19 @@ export default function InlineIdeaForm() {
             ></textarea>
           </div>
           
-          <div className="mb-4 flex items-center space-x-2">
-            <div className="flex items-center">
-              <input
-                type="radio"
-                id="public"
-                name="visibility"
-                checked={isPublic}
-                onChange={() => setIsPublic(true)}
-                className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-500 bg-gray-700"
-              />
-              <label htmlFor="public" className="text-gray-300">공개</label>
-            </div>
-            <div className="flex items-center ml-4">
-              <input
-                type="radio"
-                id="private"
-                name="visibility"
-                checked={!isPublic}
-                onChange={() => setIsPublic(false)}
-                className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-500 bg-gray-700"
-              />
-              <label htmlFor="private" className="text-gray-300">비공개</label>
-            </div>
-          </div>
-          
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-between items-center">
+            <button 
+              type="button"
+              onClick={() => setIsPublic(!isPublic)}
+              className={`px-4 py-1.5 rounded border ${
+                isPublic 
+                  ? 'border-blue-600 text-blue-400'
+                  : 'border-purple-600 text-purple-400'
+              } transition-colors`}
+            >
+              {isPublic ? '공개' : '비공개'}
+            </button>
+            
             <button
               type="submit"
               className={`py-2 px-6 rounded ${

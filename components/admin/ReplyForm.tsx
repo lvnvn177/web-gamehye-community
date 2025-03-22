@@ -51,7 +51,7 @@ export default function ReplyForm({ ideaId, isPublic }: { ideaId: number, isPubl
   if (!isAdmin) return null;
 
   return (
-    <div className="mt-4 pt-2">
+    <div className="mt-4 pt-2 bg-gray-800 rounded-lg p-4 border border-gray-700">
       <h3 className="text-lg font-semibold mb-2">
         운영자 답변 작성
         {!isPublic && <span className="ml-2 text-xs px-2 py-1 bg-gray-700 text-gray-400 rounded-full">비공개 아이디어</span>}
@@ -61,7 +61,7 @@ export default function ReplyForm({ ideaId, isPublic }: { ideaId: number, isPubl
         onChange={(e) => setReply(e.target.value)}
         maxLength={500}
         rows={3}
-        className={`w-full p-2 border rounded resize-none focus:ring-2 focus:ring-green-500 focus:border-transparent ${customFont.className}`}
+        className={`w-full p-2 border rounded resize-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-gray-700 text-gray-200 ${customFont.className}`}
         placeholder="운영자 답변 (최대 500자)"
         disabled={isSubmitting}
       />
