@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
+import { customFont } from '../../lib/fonts';
 
 type Idea = {
   id: string;
@@ -108,7 +109,7 @@ export default function IdeaList() {
                 <span className="ml-2 text-xs px-2 py-1 bg-gray-700 text-gray-400 rounded-full">비공개</span>
               )}
             </h3>
-            <p className="text-gray-300 mb-3">
+            <p className={`text-gray-300 mb-3 ${customFont.className}`}>
               {isPrivateAndRestricted ? (
                 <span className="italic text-gray-500">비공개 아이디어입니다.</span>
               ) : (

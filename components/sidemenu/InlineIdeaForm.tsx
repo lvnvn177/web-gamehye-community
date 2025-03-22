@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { X } from 'lucide-react';
 import { useIdeaForm } from '../../context/IdeaFormContext';
+import { customFont } from '../../lib/fonts';
 
 export default function InlineIdeaForm() {
   const { toggleIdeaForm } = useIdeaForm();
@@ -81,7 +82,7 @@ export default function InlineIdeaForm() {
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full p-2 border border-gray-600 rounded bg-gray-700 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none h-32"
+              className={`w-full p-2 border border-gray-600 rounded bg-gray-700 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none h-32 ${customFont.className}`}
               placeholder="게임에 관련된 생각을 자유롭게 적어주세요."
               disabled={submitting}
             ></textarea>
