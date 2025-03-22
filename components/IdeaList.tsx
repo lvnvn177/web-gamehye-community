@@ -5,10 +5,8 @@ import { supabase } from '../lib/supabase';
 type Idea = {
   id: string;
   created_at: string;
-  title: string;
-  description: string;
+  content: string;
   user_id: string | null;
-  author_name: string | null;
 };
 
 export default function IdeaList() {
@@ -58,10 +56,10 @@ export default function IdeaList() {
     <div className="space-y-6">
       {ideas.map((idea) => (
         <div key={idea.id} className="border border-gray-700 rounded-lg p-4 bg-gray-800 shadow-md">
-          <h3 className="text-lg font-semibold mb-2 text-gray-100">{idea.title}</h3>
-          <p className="text-gray-300 mb-3">{idea.description}</p>
+          <h3 className="text-lg font-semibold mb-2 text-gray-100">새로운 생각</h3>
+          <p className="text-gray-300 mb-3">{idea.content}</p>
           <div className="text-sm text-gray-500 flex justify-between">
-            <span>{idea.author_name || '익명'}</span>
+            <span>익명</span>
             <span>{new Date(idea.created_at).toLocaleDateString('ko-KR')}</span>
           </div>
         </div>

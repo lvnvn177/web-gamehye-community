@@ -26,14 +26,13 @@ export default function InlineIdeaForm() {
       const { data: userData } = await supabase.auth.getUser();
       const userId = userData.user?.id;
       
+      // 데이터베이스 스키마에 맞게 필드 이름 수정
       const { error: insertError } = await supabase
         .from('ideas')
         .insert([
           { 
-            title: '새로운 생각', // 기본 제목 설정
-            description, 
-            user_id: userId || null,
-            author_name: null // 작성자 이름 없음
+            content: description, // description 대신 content 사용
+            user_id: userId || null
           },
         ]);
       
