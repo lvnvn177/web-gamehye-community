@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
+import { customFont } from '../../lib/fonts';
 
 export default function ReplyForm({ ideaId, isPublic }: { ideaId: number, isPublic: boolean }) {
   const [reply, setReply] = useState('');
@@ -60,7 +61,7 @@ export default function ReplyForm({ ideaId, isPublic }: { ideaId: number, isPubl
         onChange={(e) => setReply(e.target.value)}
         maxLength={500}
         rows={3}
-        className="w-full p-2 border rounded resize-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+        className={`w-full p-2 border rounded resize-none focus:ring-2 focus:ring-green-500 focus:border-transparent ${customFont.className}`}
         placeholder="운영자 답변 (최대 500자)"
         disabled={isSubmitting}
       />

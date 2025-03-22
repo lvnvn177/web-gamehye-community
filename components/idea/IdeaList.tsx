@@ -2,6 +2,9 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { customFont } from '../../lib/fonts';
+import ReplyForm from '../admin/ReplyForm';
+import ReplyDisplay from './ReplyDisplay';
+import { MessageSquare, X } from 'lucide-react';
 
 type Idea = {
   id: string;
@@ -17,6 +20,7 @@ export default function IdeaList() {
   const [error, setError] = useState<string | null>(null);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [activeReplyForm, setActiveReplyForm] = useState<string | null>(null);
 
   // 시간 형식 변환 함수 수정
   const formatTimeAgo = (dateString: string) => {
@@ -82,6 +86,15 @@ export default function IdeaList() {
     fetchUserAndIdeas();
   }, []);
 
+  // 답변 버튼 클릭 핸들러
+  const toggleReplyForm = (ideaId: string) => {
+    if (activeReplyForm === ideaId) {
+      setActiveReplyForm(null);
+    } else {
+      setActiveReplyForm(ideaId);
+    }
+  };
+
   if (loading) {
     return <div className="py-4 text-center text-gray-400">아이디어를 불러오는 중...</div>;
   }
@@ -103,12 +116,16 @@ export default function IdeaList() {
         
         return (
           <div key={idea.id} className="border border-gray-700 rounded-lg p-4 bg-gray-800 shadow-md">
-            <h3 className="text-lg font-semibold mb-2 text-gray-100">
-              새로운 생각
-              {!idea.is_public && (
-                <span className="ml-2 text-xs px-2 py-1 bg-gray-700 text-gray-400 rounded-full">비공개</span>
-              )}
-            </h3>
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-gray-400 text-sm">익명</span>
+              <div className="flex items-center">
+                {!idea.is_public && (
+                  <span className="mr-2 text-xs px-2 py-1 bg-gray-700 text-gray-400 rounded-full">비공개</span>
+                )}
+                <span className="text-gray-500 text-sm">{formatTimeAgo(idea.created_at)}</span>
+              </div>
+            </div>
+            
             <p className={`text-gray-300 mb-3 ${customFont.className}`}>
               {isPrivateAndRestricted ? (
                 <span className="italic text-gray-500">비공개 아이디어입니다.</span>
@@ -116,10 +133,38 @@ export default function IdeaList() {
                 idea.content
               )}
             </p>
-            <div className="text-sm text-gray-500 flex justify-between">
-              <span>익명</span>
-              <span>{formatTimeAgo(idea.created_at)}</span>
-            </div>
+            
+            {/* 관리자 답변 버튼 - 위치 변경 및 아이콘 사용 */}
+            {isAdmin && (
+              <div className="flex justify-end mb-3">
+                <button 
+                  onClick={() => toggleReplyForm(idea.id)}
+                  className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-700 hover:bg-gray-600 text-gray-300 transition-colors"
+                  title={activeReplyForm === idea.id ? "답변 취소" : "답변하기"}
+                >
+                  {activeReplyForm === idea.id ? (
+                    <X size={16} />
+                  ) : (
+                    <MessageSquare size={16} />
+                  )}
+                </button>
+              </div>
+            )}
+            
+            {/* 구분선 추가 */}
+            <div className={`border-t border-gray-700 ${!isPrivateAndRestricted ? "mb-4" : ""}`}></div>
+            
+            {/* 답변 표시 컴포넌트 */}
+            {!isPrivateAndRestricted && (
+              <ReplyDisplay ideaId={parseInt(idea.id)} />
+            )}
+            
+            {/* 답변 폼이 활성화된 경우에만 ReplyForm 표시 */}
+            {isAdmin && activeReplyForm === idea.id && (
+              <div className="mt-3">
+                <ReplyForm ideaId={parseInt(idea.id)} isPublic={idea.is_public} />
+              </div>
+            )}
           </div>
         );
       })}
