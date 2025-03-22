@@ -61,7 +61,7 @@ export default function ProfilePage() {
         <div className="flex flex-col items-center mb-6">
           <div className="bg-gray-700 rounded-full p-4 mb-4">
             <Image 
-              src="/icon_select_user.svg"
+              src="/icon/icon_select_user.svg"
               alt="프로필" 
               width={64} 
               height={64}

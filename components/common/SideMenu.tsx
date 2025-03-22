@@ -61,7 +61,7 @@ export default function SideMenu() {
                 title="홈"
               >
                 <Image 
-                  src={isHome ? "/icon_select_home.svg" : "/icon_home.svg"} 
+                  src={isHome ? "/icon/icon_select_home.svg" : "/icon/icon_home.svg"} 
                   alt="홈" 
                   width={28} 
                   height={28}
@@ -77,7 +77,7 @@ export default function SideMenu() {
                 title="아이디어 페이지"
               >
                 <Image 
-                  src={isIdeaPage ? "/icon_select_idea.svg" : "/icon_idea.svg"} 
+                  src={isIdeaPage ? "/icon/icon_select_idea.svg" : "/icon/icon_idea.svg"} 
                   alt="아이디어 페이지" 
                   width={32} 
                   height={32}

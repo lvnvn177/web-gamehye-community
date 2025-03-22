@@ -49,7 +49,7 @@ export default function LoginButton({ currentPath }: LoginButtonProps) {
           title="프로필 페이지"
         >
           <Image 
-            src={isProfilePage ? "/icon_select_user.svg" : "/icon_user.svg"}
+            src={isProfilePage ? "/icon/icon_select_user.svg" : "/icon/icon_user.svg"}
             alt="프로필" 
             width={28} 
             height={28} 
@@ -64,7 +64,7 @@ export default function LoginButton({ currentPath }: LoginButtonProps) {
           title="Google 로그인"
         >
           <Image 
-            src={isProfilePage ? "/icon_select_user.svg" : "/icon_user.svg"}
+            src={isProfilePage ? "/icon/icon_select_user.svg" : "/icon/icon_user.svg"}
             alt="Google 로그인" 
             width={28} 
             height={28}
