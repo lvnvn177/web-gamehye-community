@@ -45,7 +45,7 @@ export default function LoginButton() {
           title="로그아웃"
         >
           <Image 
-            src="/User Icon.png" 
+            src="/icon_user.svg" 
             alt="로그아웃" 
             width={28} 
             height={28} 
@@ -59,7 +59,7 @@ export default function LoginButton() {
           title="Google 로그인"
         >
           <Image 
-            src="/public/icon_user.png" 
+            src="/icon_user.svg" 
             alt="Google 로그인" 
             width={28} 
             height={28} 
