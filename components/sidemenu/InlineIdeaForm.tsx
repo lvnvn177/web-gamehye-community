@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { X } from 'lucide-react';
 import { useIdeaForm } from '../../context/IdeaFormContext';
@@ -12,6 +12,19 @@ export default function InlineIdeaForm() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+
+  // 로그인 상태 및 사용자 이메일 확인
+  useEffect(() => {
+    const checkUserAuth = async () => {
+      const { data: userData } = await supabase.auth.getUser();
+      if (userData.user) {
+        setUserEmail(userData.user.email || null);
+      }
+    };
+    
+    checkUserAuth();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,6 +40,8 @@ export default function InlineIdeaForm() {
       
       const { data: userData } = await supabase.auth.getUser();
       const userId = userData.user?.id;
+      // 현재 로그인한 사용자의 이메일 가져오기
+      const email = userData.user?.email || null;
       
       const { error: insertError } = await supabase
         .from('ideas')
@@ -34,7 +49,8 @@ export default function InlineIdeaForm() {
           { 
             content: description,
             user_id: userId || null,
-            is_public: isPublic
+            is_public: isPublic,
+            email: email // 사용자 이메일 자동 저장
           },
         ]);
       
@@ -69,6 +85,11 @@ export default function InlineIdeaForm() {
         <div className="text-center py-4">
           <div className="text-green-400 mb-2 text-xl">✓</div>
           <p className="text-gray-100">성공적으로 제출되었습니다!</p>
+          {userEmail && (
+            <p className="text-sm text-gray-400 mt-2">
+              답변이 등록되면 {userEmail}로 알림을 보내드립니다.
+            </p>
+          )}
         </div>
       ) : (
         <form onSubmit={handleSubmit}>
@@ -87,6 +108,17 @@ export default function InlineIdeaForm() {
               disabled={submitting}
             ></textarea>
           </div>
+          
+          {/* 로그인 상태와 이메일에 대한 안내 메시지 */}
+          {userEmail ? (
+            <div className="mb-4 text-xs text-gray-400">
+              답변이 등록되면 {userEmail}로 알림을 보내드립니다.
+            </div>
+          ) : (
+            <div className="mb-4 text-xs text-gray-400">
+              로그인하시면 답변이 등록될 때 이메일로 알림을 받을 수 있습니다.
+            </div>
+          )}
           
           <div className="flex justify-between items-center">
             <button 

@@ -7,6 +7,11 @@ export default function ReplyForm({ ideaId, isPublic }: { ideaId: number, isPubl
   const [reply, setReply] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [notificationStatus, setNotificationStatus] = useState<{
+    show: boolean;
+    success: boolean;
+    message: string;
+  }>({ show: false, success: false, message: '' });
   
   useEffect(() => {
     const checkAdmin = async () => {
@@ -30,13 +35,52 @@ export default function ReplyForm({ ideaId, isPublic }: { ideaId: number, isPubl
         return;
       }
       
-      const { error } = await supabase.from('replies').insert({ 
+      // 1. 답변 등록
+      const { data: replyData, error } = await supabase.from('replies').insert({ 
         idea_id: ideaId, 
         content: reply, 
         admin_id: user.user!.id 
-      });
+      }).select().single();
       
       if (error) throw error;
+      
+      // 2. 이메일 알림 발송 API 호출
+      try {
+        const notificationResponse = await fetch('/api/reply-notification', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            ideaId,
+            replyContent: reply,
+          }),
+        });
+        
+        const notificationResult = await notificationResponse.json();
+        
+        if (notificationResponse.ok) {
+          setNotificationStatus({
+            show: true,
+            success: true,
+            message: notificationResult.message || '알림 이메일이 발송되었습니다',
+          });
+        } else {
+          setNotificationStatus({
+            show: true,
+            success: false,
+            message: notificationResult.error || '알림 이메일 발송 중 오류가 발생했습니다',
+          });
+        }
+        
+        // 3초 후에 알림 숨기기
+        setTimeout(() => {
+          setNotificationStatus(prev => ({ ...prev, show: false }));
+        }, 3000);
+        
+      } catch (notifyError) {
+        console.error('알림 발송 오류:', notifyError);
+      }
       
       setReply('');
       window.location.reload();
@@ -68,6 +112,13 @@ export default function ReplyForm({ ideaId, isPublic }: { ideaId: number, isPubl
       <div className="text-right text-sm text-gray-500 mb-2">
         {reply.length}/500
       </div>
+      {notificationStatus.show && (
+        <div className={`mb-2 text-sm rounded-md p-2 ${
+          notificationStatus.success ? 'bg-green-800 text-green-200' : 'bg-red-800 text-red-200'
+        }`}>
+          {notificationStatus.message}
+        </div>
+      )}
       <button 
         onClick={handleReply} 
         className={`px-4 py-2 rounded text-white ${
