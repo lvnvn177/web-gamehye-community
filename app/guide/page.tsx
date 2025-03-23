@@ -12,7 +12,7 @@ export default function LoginGuidePage() {
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/idea`
+        redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/idea`
       }
     });
   };
