@@ -31,13 +31,9 @@ export default function LoginButton({ currentPath }: LoginButtonProps) {
     };
   }, []);
 
-  const handleLogin = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: { 
-        redirectTo: `${window.location.origin}/` 
-      },
-    });
+  // 로그인 안되어 있을 때 가이드 페이지로 이동
+  const handleNavigateToGuide = () => {
+    router.push('/guide');
   };
   
   return (
@@ -59,13 +55,13 @@ export default function LoginButton({ currentPath }: LoginButtonProps) {
         </Link>
       ) : (
         <button 
-          onClick={handleLogin} 
+          onClick={handleNavigateToGuide} 
           className="flex items-center justify-center p-2 rounded-full"
-          title="Google 로그인"
+          title="로그인 가이드"
         >
           <Image 
             src={isProfilePage ? "/icon/icon_select_user.svg" : "/icon/icon_user.svg"}
-            alt="Google 로그인" 
+            alt="로그인 가이드" 
             width={28} 
             height={28}
             priority={!isProfilePage}

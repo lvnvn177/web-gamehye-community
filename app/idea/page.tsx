@@ -5,10 +5,14 @@ import InlineIdeaForm from '../../components/sidemenu/InlineIdeaForm';
 import { useIdeaForm } from '../../context/IdeaFormContext';
 import { useEffect, useState } from 'react';
 import { PlusCircle, QrCode } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 
 export default function IdeaPage() {
   const { isFormVisible, toggleIdeaForm } = useIdeaForm();
   const [isQRModalVisible, setIsQRModalVisible] = useState(false);
+  const router = useRouter();
+  const user = useUser(); // 사용자 로그인 상태 확인
   
   // 폼이 표시될 때 body에 클래스 추가하여 스크롤 방지
   useEffect(() => {
@@ -25,6 +29,16 @@ export default function IdeaPage() {
 
   const toggleQRModal = () => {
     setIsQRModalVisible(!isQRModalVisible);
+  };
+
+  const handleIdeaButtonClick = () => {
+    if (user) {
+      // 로그인된 상태면 아이디어 폼 표시
+      toggleIdeaForm();
+    } else {
+      // 로그인되지 않은 상태면 가이드 페이지로 이동
+      router.push('/guide');
+    }
   };
   
   return (
@@ -78,7 +92,7 @@ export default function IdeaPage() {
           </button>
           
           <button 
-            onClick={toggleIdeaForm}
+            onClick={handleIdeaButtonClick}
             className="flex items-center space-x-1 text-gray-300 hover:text-white bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded"
           >
             <PlusCircle className="h-4 w-4" />
