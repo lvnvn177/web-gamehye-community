@@ -93,7 +93,7 @@ export function generateReplyEmailHTML(replyData: {
               <p>${replyContent}</p>
             </div>
             
-            <a href="${appUrl}/ideas#${ideaId}" class="btn">아이디어 보러가기</a>
+            <a href="https://www.gamehye.com/idea" class="btn">아이디어 보러가기</a>
             
             <p>감사합니다.<br>GameHye 드림</p>
           </div>
