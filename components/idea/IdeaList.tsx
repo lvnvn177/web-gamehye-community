@@ -5,6 +5,7 @@ import { customFont } from '../../lib/fonts';
 import ReplyForm from '../admin/ReplyForm';
 import ReplyDisplay from './ReplyDisplay';
 import { MessageSquare, X } from 'lucide-react';
+import Image from 'next/image';
 
 type Idea = {
   id: string;
@@ -21,6 +22,7 @@ export default function IdeaList() {
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [activeReplyForm, setActiveReplyForm] = useState<string | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState<string | null>(null);
 
   // 시간 형식 변환 함수 수정
   const formatTimeAgo = (dateString: string) => {
@@ -95,6 +97,50 @@ export default function IdeaList() {
     }
   };
 
+  // 삭제 핸들러 추가
+  const handleDelete = async (ideaId: string) => {
+    if (!confirm('정말로 이 아이디어를 삭제하시겠습니까?')) {
+      return;
+    }
+    
+    try {
+      setDeleteLoading(ideaId);
+      
+      // 먼저 관련 답변 확인
+      const { data: replies } = await supabase
+        .from('replies')
+        .select('id')
+        .eq('idea_id', ideaId);
+      
+      // 답변이 있는 경우 답변 먼저 삭제
+      if (replies && replies.length > 0) {
+        const { error: replyDeleteError } = await supabase
+          .from('replies')
+          .delete()
+          .eq('idea_id', ideaId);
+        
+        if (replyDeleteError) throw replyDeleteError;
+      }
+      
+      // 아이디어 삭제
+      const { error: ideaDeleteError } = await supabase
+        .from('ideas')
+        .delete()
+        .eq('id', ideaId);
+      
+      if (ideaDeleteError) throw ideaDeleteError;
+      
+      // 성공적으로 삭제되면 UI에서도 해당 아이디어 제거
+      setIdeas(ideas.filter(idea => idea.id !== ideaId));
+      
+    } catch (err) {
+      console.error('Error deleting idea:', err);
+      alert('아이디어 삭제 중 오류가 발생했습니다.');
+    } finally {
+      setDeleteLoading(null);
+    }
+  };
+
   if (loading) {
     return <div className="py-4 text-center text-gray-400">아이디어를 불러오는 중...</div>;
   }
@@ -134,9 +180,9 @@ export default function IdeaList() {
               )}
             </p>
             
-            {/* 관리자 답변 버튼 - 위치 변경 및 아이콘 사용 */}
+            {/* 관리자 답변 버튼과 삭제 버튼 */}
             {isAdmin && (
-              <div className="flex justify-start mb-3">
+              <div className="flex justify-start mb-3 space-x-2">
                 <button 
                   onClick={() => toggleReplyForm(idea.id)}
                   className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-700 hover:bg-gray-600 text-gray-300 transition-colors"
@@ -146,6 +192,19 @@ export default function IdeaList() {
                     <X size={16} />
                   ) : (
                     <MessageSquare size={16} />
+                  )}
+                </button>
+                
+                <button 
+                  onClick={() => handleDelete(idea.id)}
+                  disabled={deleteLoading === idea.id}
+                  className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-700 hover:bg-red-700 text-gray-300 hover:text-white transition-colors"
+                  title="아이디어 삭제"
+                >
+                  {deleteLoading === idea.id ? (
+                    <span className="animate-pulse">...</span>
+                  ) : (
+                    <Image src="/icon/icon_remove.svg" width={16} height={16} alt="삭제" />
                   )}
                 </button>
               </div>
