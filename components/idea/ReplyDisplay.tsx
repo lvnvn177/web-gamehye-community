@@ -2,6 +2,9 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { customFont } from '../../lib/fonts';
+import { parseISO, formatDistanceToNow, differenceInHours } from 'date-fns';
+import { ko } from 'date-fns/locale';
+import { formatInTimeZone } from 'date-fns-tz';
 
 type Reply = {
   id: number;
@@ -18,27 +21,27 @@ export default function ReplyDisplay({ ideaId }: { ideaId: number }) {
 
   // 시간 형식 변환 함수
   const formatTimeAgo = (dateString: string) => {
-    const now = new Date();
-    const createdAt = new Date(dateString);
-    
-    // 시간 차이 계산 (밀리초 단위)
-    const diffInMs = now.getTime() - createdAt.getTime();
-    
-    // 시간 차이를 시간 단위로 변환
-    const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
-    
-    // 24시간 이내인 경우
-    if (diffInHours < 24) {
-      // 1시간 미만인 경우 분 단위로 표시
-      if (diffInHours < 1) {
-        const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
-        return diffInMinutes <= 0 ? '방금 전' : `${diffInMinutes}분 전`;
+    try {
+      // UTC 시간을 파싱
+      const utcDate = parseISO(dateString);
+      
+      // 현재 시간과의 차이 계산
+      const hoursDiff = differenceInHours(new Date(), utcDate);
+      
+      // 24시간 이내인 경우 상대적 시간 표시
+      if (hoursDiff < 24) {
+        return formatDistanceToNow(utcDate, {
+          addSuffix: true,
+          locale: ko
+        });
       }
-      return `${diffInHours}시간 전`;
+      
+      // 24시간 이상인 경우 날짜 형식으로 표시 (KST 기준)
+      return formatInTimeZone(utcDate, 'Asia/Seoul', 'yyyy년 M월 d일', { locale: ko });
+    } catch (error) {
+      console.error('시간 형식 변환 오류:', error);
+      return dateString; // 오류 발생 시 원본 문자열 반환
     }
-    
-    // 24시간 이상인 경우 날짜 형식으로 표시
-    return createdAt.toLocaleDateString('ko-KR');
   };
 
   useEffect(() => {
@@ -55,6 +58,8 @@ export default function ReplyDisplay({ ideaId }: { ideaId: number }) {
         if (error) {
           throw error;
         }
+        
+        console.log('Supabase 원본 데이터:', data);
         
         setReplies(data || []);
       } catch (err) {

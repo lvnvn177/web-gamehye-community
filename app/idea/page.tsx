@@ -6,13 +6,31 @@ import { useIdeaForm } from '../../context/IdeaFormContext';
 import { useEffect, useState } from 'react';
 import { PlusCircle, QrCode } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
+import { supabase } from '../../lib/supabase'; // 직접 supabase 가져오기
 
 export default function IdeaPage() {
   const { isFormVisible, toggleIdeaForm } = useIdeaForm();
   const [isQRModalVisible, setIsQRModalVisible] = useState(false);
   const router = useRouter();
-  const user = useUser(); // 사용자 로그인 상태 확인
+  const [user, setUser] = useState<any>(null); // 사용자 상태 직접 관리
+  
+  // LoginButton.tsx와 유사한 방식으로 사용자 인증 상태 확인
+  useEffect(() => {
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setUser(session?.user || null);
+      }
+    );
+    
+    // 현재 로그인된 사용자 확인
+    supabase.auth.getUser().then(({ data }) => {
+      setUser(data.user);
+    });
+    
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, []);
   
   // 폼이 표시될 때 body에 클래스 추가하여 스크롤 방지
   useEffect(() => {

@@ -1,12 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '../../../../lib/supabase';
 
+// 두 번째 방법: 타입 정의를 분리
+type RouteParams = { params: { id: string } };
+
+type ParamsType = Promise<{ id: string }>;
+
 export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  props: { params: ParamsType }
 ) {
   try {
-    const id = params.id;
+    const { id } = await props.params;
     
     // 사용자 인증 확인
     const { data: { user } } = await supabase.auth.getUser();
