@@ -141,7 +141,7 @@ export default function PrivacyPage() {
           <h2 className="text-xl font-semibold mt-6 mb-3">문의하기</h2>
           <p>본 개인정보처리방침에 관한 질문이 있으시면, 다음과 같이 당사에 연락하실 수 있습니다:</p>
           <ul className="list-disc pl-5 mt-2">
-            <li>이메일: lvnvn@sellanding.kr</li>
+            <li>이메일: gamehye.sellanding@gmail.com</li>
           </ul>
         </div>
       </main>

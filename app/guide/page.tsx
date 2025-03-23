@@ -28,6 +28,8 @@ export default function LoginGuidePage() {
             width={64}
             height={64}
             className="mx-auto my-4"
+            priority
+            style={{ width: '64px', height: '64px', objectFit: 'contain' }}
           />
         </div>
         

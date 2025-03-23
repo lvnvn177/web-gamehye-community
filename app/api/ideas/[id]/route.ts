@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '../../../../lib/supabase';
+import { logger } from '../../../../lib/logger';
 
 // 두 번째 방법: 타입 정의를 분리
 type RouteParams = { params: { id: string } };
@@ -40,7 +41,7 @@ export async function DELETE(
     
     return NextResponse.json({ success: true });
   } catch (error: any) {
-    console.error('Error deleting idea:', error);
+    logger.error('Error deleting idea:', error);
     return NextResponse.json(
       { error: error.message || '아이디어 삭제 중 오류가 발생했습니다.' }, 
       { status: 500 }

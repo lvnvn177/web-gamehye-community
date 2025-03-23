@@ -10,6 +10,7 @@ import { formatDistanceToNow, parseISO } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { formatInTimeZone } from 'date-fns-tz';
 import { differenceInHours } from 'date-fns';
+import { logger } from '../../lib/logger';
 
 type Idea = {
   id: string;
@@ -48,7 +49,7 @@ export default function IdeaList() {
       // 24시간 이상인 경우 날짜 형식으로 표시 (KST 기준)
       return formatInTimeZone(utcDate, 'Asia/Seoul', 'yyyy년 M월 d일', { locale: ko });
     } catch (error) {
-      console.error('시간 형식 변환 오류:', error);
+      logger.error('시간 형식 변환 오류:', error);
       return dateString; // 오류 발생 시 원본 문자열 반환
     }
   };
@@ -80,7 +81,7 @@ export default function IdeaList() {
         setIdeas(data || []);
       } catch (err) {
         setError('아이디어를 불러오는 중 오류가 발생했습니다.');
-        console.error('Error fetching ideas:', err);
+        logger.error('Error fetching ideas:', err);
       } finally {
         setLoading(false);
       }
@@ -135,7 +136,7 @@ export default function IdeaList() {
       setIdeas(ideas.filter(idea => idea.id !== ideaId));
       
     } catch (err) {
-      console.error('Error deleting idea:', err);
+      logger.error('Error deleting idea:', err);
       alert('아이디어 삭제 중 오류가 발생했습니다.');
     } finally {
       setDeleteLoading(null);
@@ -175,7 +176,7 @@ export default function IdeaList() {
             
             <p className={`text-gray-300 mb-3 whitespace-pre-line ${customFont.className}`}>
               {isPrivateAndRestricted ? (
-                <span className="italic text-gray-500">비공개 아이디어입니다.</span>
+                <span className="italic text-gray-500">비공개 글입니다.</span>
               ) : (
                 idea.content
               )}
@@ -212,12 +213,10 @@ export default function IdeaList() {
             )}
             
             {/* 구분선 - 재사용 */}
-            <div className={`border-t border-gray-700 ${!isPrivateAndRestricted ? "mb-4" : ""}`}></div>
+            <div className="border-t border-gray-700 mb-4"></div>
             
-            {/* 답변 표시 컴포넌트 */}
-            {!isPrivateAndRestricted && (
-              <ReplyDisplay ideaId={parseInt(idea.id)} />
-            )}
+            {/* 답변 표시 컴포넌트 - 항상 렌더링 */}
+            <ReplyDisplay ideaId={parseInt(idea.id)} />
             
             {/* 답변 폼이 활성화된 경우에만 ReplyForm 표시 */}
             {isAdmin && activeReplyForm === idea.id && (

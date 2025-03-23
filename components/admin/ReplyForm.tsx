@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { customFont } from '../../lib/fonts';
+import { logger } from '../../lib/logger';
 
 export default function ReplyForm({ ideaId, isPublic }: { ideaId: number, isPublic: boolean }) {
   const [reply, setReply] = useState('');
@@ -79,13 +80,13 @@ export default function ReplyForm({ ideaId, isPublic }: { ideaId: number, isPubl
         }, 3000);
         
       } catch (notifyError) {
-        console.error('알림 발송 오류:', notifyError);
+        logger.error('알림 발송 오류:', notifyError);
       }
       
       setReply('');
       window.location.reload();
     } catch (error) {
-      console.error('Error submitting reply:', error);
+      logger.error('Error submitting reply:', error);
       alert('답변 제출 중 오류가 발생했습니다.');
     } finally {
       setIsSubmitting(false);

@@ -4,6 +4,7 @@ import { supabase } from '../../lib/supabase';
 import { X } from 'lucide-react';
 import { useIdeaForm } from '../../context/IdeaFormContext';
 import { customFont } from '../../lib/fonts';
+import { logger } from '../../lib/logger';
 
 export default function InlineIdeaForm() {
   const { toggleIdeaForm } = useIdeaForm();
@@ -65,7 +66,7 @@ export default function InlineIdeaForm() {
       }, 3000);
       
     } catch (err) {
-      console.error('Error submitting idea:', err);
+      logger.error('Error submitting idea:', err);
       setError('아이디어 제출 중 오류가 발생했습니다. 다시 시도해주세요.');
     } finally {
       setSubmitting(false);
@@ -104,7 +105,7 @@ export default function InlineIdeaForm() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className={`w-full p-2 border border-gray-600 rounded bg-gray-700 text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none h-32 whitespace-pre-line ${customFont.className}`}
-              placeholder="게임에 관련된 생각을 자유롭게 적어주세요."
+              placeholder="자사의 게임에 대한 피드백 또는 게임 관련 생각을 자유롭게 적어주세요."
               disabled={submitting}
             ></textarea>
           </div>

@@ -98,8 +98,7 @@ export function generateReplyEmailHTML(replyData: {
             <p>감사합니다.<br>GameHye 드림</p>
           </div>
           <div class="footer">
-            <p>본 메일은 발신 전용이며, 문의사항은 웹사이트를 통해 부탁드립니다.</p>
-            <p>© ${new Date().getFullYear()} GameHye. All rights reserved.</p>
+            <p>© ${new Date().getFullYear()} Sellanding. All rights reserved.</p>
           </div>
         </div>
       </body>

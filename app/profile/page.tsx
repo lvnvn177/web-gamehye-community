@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { logger } from '../../lib/logger';
 
 export default function ProfilePage() {
   const [user, setUser] = useState<any>(null);
@@ -29,7 +30,7 @@ export default function ProfilePage() {
         setUsername(emailUsername);
         
       } catch (error) {
-        console.error('Error fetching user:', error);
+        logger.error('Error fetching user:', error);
       } finally {
         setLoading(false);
       }

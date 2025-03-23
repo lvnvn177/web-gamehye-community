@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { logger } from './logger';
 
 interface EmailOptions {
   to: string;
@@ -10,8 +11,8 @@ interface EmailOptions {
 
 // 트랜스포터 생성 로직을 분리해서 로깅 추가
 function createTransporter() {
-  console.log('[nodemailer] 트랜스포터 생성 시작');
-  console.log('[nodemailer] SMTP 설정 확인:', {
+  logger.debug('[nodemailer] 트랜스포터 생성 시작');
+  logger.debug('[nodemailer] SMTP 설정 확인', {
     host: process.env.SMTP_HOST,
     port: process.env.SMTP_PORT,
     user: process.env.SMTP_USER,
@@ -34,7 +35,7 @@ function createTransporter() {
     }
   });
   
-  console.log('[nodemailer] 트랜스포터 생성 완료');
+  logger.debug('[nodemailer] 트랜스포터 생성 완료');
   return transporter;
 }
 
@@ -42,22 +43,22 @@ function createTransporter() {
 export async function sendEmail(options: EmailOptions): Promise<void> {
   const { to, subject, html, cc, bcc } = options;
   
-  console.log('[nodemailer] 이메일 발송 시작');
+  logger.debug('[nodemailer] 이메일 발송 시작');
   try {
     const transporter = createTransporter();
     
     // 연결 테스트
-    console.log('[nodemailer] SMTP 연결 테스트 시작');
+    logger.debug('[nodemailer] SMTP 연결 테스트 시작');
     try {
       await transporter.verify();
-      console.log('[nodemailer] SMTP 연결 성공');
+      logger.debug('[nodemailer] SMTP 연결 성공');
     } catch (verifyError) {
-      console.error('[nodemailer] SMTP 연결 테스트 실패:', verifyError);
+      logger.error('[nodemailer] SMTP 연결 테스트 실패:', verifyError);
       throw verifyError;
     }
     
     // 실제 이메일 발송
-    console.log('[nodemailer] 이메일 발송 시도');
+    logger.debug('[nodemailer] 이메일 발송 시도');
     const mailOptions = {
       from: `"GameHye" <${process.env.SMTP_FROM || 'noreply@gamehye.com'}>`,
       to,
@@ -69,9 +70,9 @@ export async function sendEmail(options: EmailOptions): Promise<void> {
     
     const info = await transporter.sendMail(mailOptions);
     
-    console.log('[nodemailer] 이메일 발송 성공:', info.messageId);
+    logger.info('[nodemailer] 이메일 발송 성공:', info.messageId);
   } catch (error) {
-    console.error('[nodemailer] 이메일 발송 오류:', error);
+    logger.error('[nodemailer] 이메일 발송 오류:', error);
     throw error;
   }
 } 

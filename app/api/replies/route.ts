@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '../../../lib/supabase';
+import { logger } from '@/lib/logger';
 
 export async function POST(req: NextRequest) {
   try {
@@ -34,7 +35,7 @@ export async function POST(req: NextRequest) {
     
     return NextResponse.json({ success: true, data });
   } catch (error: any) {
-    console.error('Error submitting reply:', error);
+    logger.error('Error submitting reply:', error);
     return NextResponse.json(
       { error: error.message || '답변 저장 중 오류가 발생했습니다.' }, 
       { status: 500 }
