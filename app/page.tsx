@@ -28,9 +28,23 @@ export default function HomePage() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
             <div className="bg-gray-700 p-6 rounded-lg shadow-md">
-              <h2 className="text-xl font-bold mb-3 text-gray-100">아이디어 공유</h2>
+              <h2 className="text-xl font-bold mb-3 text-gray-100">생각 남기기</h2>
               <p className="text-gray-300">
-                새로운 게임 아이디어를 자유롭게 제안하고, 다른 사람들의 아이디어를 통해 영감을 얻으세요.
+                자사 게임에 대한 피드백 또는 게임에 대한 자유로운 생각을 남겨주세요.
+              </p>
+            </div>
+            
+            <div className="bg-gray-700 p-6 rounded-lg shadow-md">
+              <h2 className="text-xl font-bold mb-3 text-gray-100">익명성</h2>
+              <p className="text-gray-300">
+                모든 댓글은 익명으로 작성됩니다,  자유롭게 생각을 남겨주세요.
+              </p>
+            </div>
+            
+            <div className="bg-gray-700 p-6 rounded-lg shadow-md">
+              <h2 className="text-xl font-bold mb-3 text-gray-100">공개 설정</h2>
+              <p className="text-gray-300">
+                생각을 남길 때 공개 또는 비공개로 설정할 수 있습니다.
               </p>
             </div>
           </div>

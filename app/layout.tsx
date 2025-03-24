@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "GameHye.com - 게임 소통 창구",
   description: "게임에 대한 철학과 아이디어를 자유롭게 나누는 공간",
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
