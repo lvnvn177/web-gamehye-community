@@ -21,8 +21,8 @@ export default function HomePage() {
           <div className="mb-10">
             <p className="text-xl md:text-2xl mb-4 text-gray-300">게임에 관한 모든 아이디어를 공유하고 발전시키는 공간</p>
             <p className="text-lg text-gray-400 mb-8">
-              GameHye는 게임 개발자와 게임 애호가들이 모여 새로운 게임 아이디어를 공유하고,
-              피드백을 주고받으며 함께 성장할 수 있는 커뮤니티 플랫폼입니다.
+              GameHye는 자사 게임에 대한 피드백을 남기거나 게임에 대한 자유로운 생각을 남기고,
+              답변을 받으며 서로 생각을 공유하는 커뮤니티 플랫폼입니다.
             </p>
           </div>
           

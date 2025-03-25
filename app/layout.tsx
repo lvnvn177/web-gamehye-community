@@ -34,9 +34,9 @@ export default function RootLayout({
         <meta property="og:image" content="https://www.gamehye.com/logo.png" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <html lang="ko">
+      <html lang="ko" className="dark">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-900 text-gray-200`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-900 text-gray-200 dark:bg-gray-900 dark:text-gray-200`}
         >
           <IdeaFormProvider>
             <div className="flex">
