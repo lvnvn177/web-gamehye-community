@@ -42,7 +42,9 @@ export default function SideMenu() {
         {/* GameHye 텍스트를 상단에 별도로 배치 */}
         <div className="p-4 pt-6">
           <div className="flex justify-between items-center">
-            <h2 className="text-xl font-bold text-gray-100">GameHye</h2>
+            <Link href="/">
+              <h2 className="text-xl font-bold text-gray-100">GameHye</h2>
+            </Link>
             <button onClick={toggleMenu} className="md:hidden text-gray-400 hover:text-gray-200">
               <X className="h-5 w-5" />
             </button>
