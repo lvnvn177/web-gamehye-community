@@ -7,9 +7,10 @@ import Link from 'next/link';
 
 interface LoginButtonProps {
   currentPath?: string;
+  onClick?: () => void;
 }
 
-export default function LoginButton({ currentPath }: LoginButtonProps) {
+export default function LoginButton({ currentPath, onClick }: LoginButtonProps) {
   const [user, setUser] = useState<any>(null);
   const isProfilePage = currentPath === '/profile';
   const router = useRouter();
@@ -33,6 +34,7 @@ export default function LoginButton({ currentPath }: LoginButtonProps) {
 
   // 로그인 안되어 있을 때 가이드 페이지로 이동
   const handleNavigateToGuide = () => {
+    if (onClick) onClick();
     router.push('/guide');
   };
   
@@ -43,6 +45,7 @@ export default function LoginButton({ currentPath }: LoginButtonProps) {
           href="/profile"
           className="flex items-center justify-center p-2 rounded-full"
           title="프로필 페이지"
+          onClick={onClick}
         >
           <Image 
             src={isProfilePage ? "/icon/icon_select_user.svg" : "/icon/icon_user.svg"}

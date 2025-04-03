@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SideMenu from "../components/common/SideMenu";
@@ -14,6 +14,12 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+};
 
 export const metadata: Metadata = {
   title: "GameHye.com - 게임 소통 창구",
@@ -39,9 +45,9 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-900 text-gray-200 dark:bg-gray-900 dark:text-gray-200`}
         >
           <IdeaFormProvider>
-            <div className="flex">
+            <div className="flex flex-col md:flex-row min-h-screen">
               <SideMenu />
-              <main className="flex-1 md:ml-64">
+              <main className="flex-1 md:ml-64 w-full transition-all duration-300 ease-in-out">
                 {children}
               </main>
             </div>
