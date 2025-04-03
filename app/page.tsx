@@ -32,7 +32,7 @@ export default function HomePage() {
                     className="mr-1"
                     style={{ display: 'inline-block' }}
                   /> <span style={{ verticalAlign: 'middle', color: 'white' }}>Sellanding</span>
-                </a></span><br />에서 제작한 게임에 대한 피드백 또는 게임에 대한 자유로운 생각을 남겨주세요.
+                </a></span><br />에서 제작한 <span className="text-white">피드백</span> 또는 '게임' 이라는 주제에 관한 <span className="text-white">자유로운 생각</span>을 남겨주세요.
             </p>
           </div>
           
