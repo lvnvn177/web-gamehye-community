@@ -22,8 +22,17 @@ export default function HomePage() {
           <div className="mb-8 md:mb-10">
             <p className="text-lg sm:text-xl md:text-2xl mb-3 md:mb-4 text-gray-300">게임에 관한 모든 아이디어를 공유하고 발전시키는 공간</p>
             <p className="text-base sm:text-lg text-gray-400 mb-6 md:mb-8">
-              GameHye는 자사 게임에 대한 피드백을 남기거나 게임에 대한 자유로운 생각을 남기고,
-              답변을 받으며 서로 생각을 공유하는 커뮤니티 플랫폼입니다.
+            <span className="inline-flex items-center" style={{ display: 'inline-flex', alignItems: 'center', verticalAlign: 'text-bottom' }}>
+                <a href="https://www.sellanding.kr" target="_blank" rel="noopener noreferrer" className="inline-flex items-center hover:text-blue-400 transition-colors">
+                  <Image 
+                    src="/sellanding.svg" 
+                    alt="Sellanding Logo" 
+                    width={17} 
+                    height={17} 
+                    className="mr-1"
+                    style={{ display: 'inline-block' }}
+                  /> <span style={{ verticalAlign: 'middle', color: 'white' }}>Sellanding</span>
+                </a></span><br />에서 제작한 게임에 대한 피드백을 남기거나 게임에 대한 자유로운 생각을 남겨주세요.
             </p>
           </div>
           
@@ -31,7 +40,7 @@ export default function HomePage() {
             <div className="bg-gray-700 p-5 sm:p-6 rounded-lg shadow-md hover:bg-gray-650 transition-colors">
               <h2 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-gray-100">생각 남기기</h2>
               <p className="text-sm sm:text-base text-gray-300">
-                자사 게임에 대한 피드백 또는 게임에 대한 자유로운 생각을 남겨주세요.
+                피드백 또는 게임에 대한 자유로운 생각을 남겨주세요.
               </p>
             </div>
             
